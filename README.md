@@ -1,4 +1,4 @@
-# Simple Face Detector
+# Simple Face Classifier
 
 Simple app with GUI for image face classification based on simple generated features.
 
