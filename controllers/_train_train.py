@@ -15,15 +15,15 @@ class TrainTrainController(Controller):
         method = dpg.get_value('method_combo_list')
         match method:
             case 'histogram':
-                params_grid = list(range(1, 256))
-            case 'dft':
-                params_grid = list(range(1, 30))
-            case 'dct':
-                params_grid = list(range(1, 70))
-            case 'scale':
-                params_grid = list(range(10, 50))
-            case 'gradient':
                 params_grid = list(range(1, 20))
+            case 'dft':
+                params_grid = list(range(1, 10))
+            case 'dct':
+                params_grid = list(range(1, 15))
+            case 'scale':
+                params_grid = list(range(10, 15))
+            case 'gradient':
+                params_grid = list(range(1, 10))
         
         acc_score_list = []
         for idx, param in enumerate(params_grid):

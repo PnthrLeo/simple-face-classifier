@@ -15,7 +15,7 @@ class Controller(ABC):
                 pages.TrainTrainPage(self.width, self.height)
             case 'parameter_search_ref':
                 pages.ParameterSearchPage(self.width, self.height)
-            case 'best_tt_size_search_ref':
+            case 'train_test_tests_ref':
                 pages.BestTTSizeSearchPage(self.width, self.height)
             case 'bad_im_search_ref':
                 pages.BadImSearchPage(self.width, self.height)

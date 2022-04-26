@@ -28,10 +28,11 @@ class BestTTSizeSearchPage(Page):
                 with dpg.menu(label='Choose Program Mode', tag='program_mode_menu'):
                     dpg.add_menu_item(label='train-train Test', callback=self.controller.switch_page, tag='train_train_test_ref')
                     dpg.add_menu_item(label='Parameter Search', callback=self.controller.switch_page,  tag='parameter_search_ref')
-                    dpg.add_menu_item(label='Best train-test Size Search', callback=self.controller.switch_page, tag='best_tt_size_search_ref')
+                    dpg.add_menu_item(label='Train Test tests', callback=self.controller.switch_page, tag='train_test_tests_ref')
                     dpg.add_menu_item(label='Bad Image Search', callback=self.controller.switch_page, tag='bad_im_search_ref')
                     dpg.add_menu_item(label='Composed Classifier Test', callback=self.controller.switch_page, tag='comp_clas_test_ref')
 
+            dpg.add_combo(label='Test Mode', items=['train_test_split', 'test_size', 'train_size'], default_value='test_size', tag='mode_combo_list')
             dpg.add_button(label='Select Train Dataset', callback=self.controller.select_train_dataset, tag='select_data_button')
             dpg.add_text(default_value='Path:', tag='data_path_text')
             dpg.add_combo(label='Recognition Method', items=['histogram', 'dft', 'dct', 'scale', 'gradient'],

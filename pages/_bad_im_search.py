@@ -31,7 +31,7 @@ class BadImSearchPage(Page):
                 with dpg.menu(label='Choose Program Mode', tag='program_mode_menu'):
                     dpg.add_menu_item(label='train-train Test', callback=self.controller.switch_page, tag='train_train_test_ref')
                     dpg.add_menu_item(label='Parameter Search', callback=self.controller.switch_page,  tag='parameter_search_ref')
-                    dpg.add_menu_item(label='Best train-test Size Search', callback=self.controller.switch_page, tag='best_tt_size_search_ref')
+                    dpg.add_menu_item(label='Train Test tests', callback=self.controller.switch_page, tag='train_test_tests_ref')
                     dpg.add_menu_item(label='Bad Image Search', callback=self.controller.switch_page, tag='bad_im_search_ref')
                     dpg.add_menu_item(label='Composed Classifier Test', callback=self.controller.switch_page, tag='comp_clas_test_ref')
 
@@ -44,6 +44,7 @@ class BadImSearchPage(Page):
             dpg.add_input_int(label='Number of Bins', width=125, min_value=1, max_value=255, min_clamped=True, max_clamped=True, default_value=1, tag='method_input')
             dpg.add_input_int(label='Select Bad Photo', width=125, min_value=1, min_clamped=True, default_value=1, enabled=False, callback=self.controller.select_bad_photo, tag='photo_input')
             dpg.add_button(label='Run Test', callback=self.controller.run_test, tag='run_test_button')
+            dpg.add_combo(label='Mode', items=['all_images', 'bad_images'], width=_COMBO_WIDTH, default_value='all_images', callback=self.controller.switch_mode, tag='image_combo_mode')
 
     def __draw_photo_window_elements(self):
         with dpg.window(label='Photo', width=self.media_window_width, height=self.media_window_height, pos=(_CONTROL_WINDOW_WIDTH, 0), tag='photo_window'):

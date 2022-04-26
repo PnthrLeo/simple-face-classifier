@@ -28,7 +28,7 @@ class TrainTrainPage(Page):
                 with dpg.menu(label='Choose Program Mode', tag='program_mode_menu'):
                     dpg.add_menu_item(label='train-train Test', callback=self.controller.switch_page, tag='train_train_test_ref')
                     dpg.add_menu_item(label='Parameter Search', callback=self.controller.switch_page,  tag='parameter_search_ref')
-                    dpg.add_menu_item(label='Best train-test Size Search', callback=self.controller.switch_page, tag='best_tt_size_search_ref')
+                    dpg.add_menu_item(label='Train Test tests', callback=self.controller.switch_page, tag='train_test_tests_ref')
                     dpg.add_menu_item(label='Bad Image Search', callback=self.controller.switch_page, tag='bad_im_search_ref')
                     dpg.add_menu_item(label='Composed Classifier Test', callback=self.controller.switch_page, tag='comp_clas_test_ref')
 

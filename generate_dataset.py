@@ -4,7 +4,7 @@ import pandas as pd
 import shutil
 
 
-def run_split(image_folder_path, distination_path, test_size=0.25, random_state=42):
+def run_split(image_folder_path, distination_path, test_size=0.3, random_state=42):
     df = generate_df(image_folder_path)
     y = df['face_id']
     X = df.drop(['photo_id', 'face_id'], axis=1)

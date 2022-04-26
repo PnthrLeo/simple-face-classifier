@@ -10,6 +10,8 @@ class BadImSearchController(Controller):
         super().__init__(width=width, height=height)
         self.image_folder_path_train = None
         self.image_folder_path_test = None
+        self.images_df = None
+        self.pred = None
         self.bad_images_df = None
         self.bad_pred = None
         self.clf = None
@@ -40,15 +42,30 @@ class BadImSearchController(Controller):
         self.clf = cls(param)
         y_pred, _, false_predictions = self.clf.run_manual(self.image_folder_path_train, self.image_folder_path_test)
         
+        self.images_df = self.clf.df_test
+        self.pred = y_pred
         self.bad_images_df = self.clf.df_test[pd.Series(false_predictions, dtype=bool).values]
-        self.bad_pred = y_pred
+        self.bad_pred = y_pred[pd.Series(false_predictions, dtype=bool).values]
         
-        dpg.configure_item('photo_input', enabled=True, min_value=1, max_value=len(self.bad_images_df))
+        dpg.set_value('image_combo_mode', 'all_images')
+        dpg.configure_item('photo_input', enabled=True, min_value=1, max_value=len(self.images_df))
+        dpg.set_value('photo_input', 1)
         
         self.__show_instance(0)
     
     def __show_instance(self, idx):
-        image_row = self.bad_images_df.iloc[idx]
+        df = None
+        pred = None
+        
+        match dpg.get_value('image_combo_mode'):
+            case 'all_images':
+                df = self.images_df
+                pred = self.pred
+            case 'bad_images':
+                df = self.bad_images_df
+                pred = self.bad_pred
+        
+        image_row = df.iloc[idx]
         
         image_path = Path(self.image_folder_path_test)
         image_path = image_path / f'{int(image_row["photo_id"])}_{int(image_row["face_id"])}.jpg'
@@ -57,8 +74,8 @@ class BadImSearchController(Controller):
         
         photo_path = str(image_path)
         feature_path = f'./__app_cache__/{dpg.get_value("method_combo_list")}_representation.png'
-        result_path = f'./data/orl/{int((self.bad_pred[idx]-1)*10 + 1)}_{int(self.bad_pred[idx])}.jpg'
-        
+        result_path = f'./data/orl/{int((pred[idx]-1)*10 + 1)}_{int(pred[idx])}.jpg'
+
         self.__draw_image(photo_path, 'photo')
         self.__draw_image(feature_path, 'photo_feature')
         
@@ -121,6 +138,19 @@ class BadImSearchController(Controller):
     def select_test_folder(self, sender, app_data):
         dpg.set_value('test_data_path_text', f'Path: {app_data["current_path"]}')
         self.image_folder_path_test = app_data["current_path"]
+        
+    def switch_mode(self, sender, app_data):
+        mode = app_data
+        match app_data:
+            case 'all_images':
+                dpg.set_value('image_combo_mode', 'all_images')
+                dpg.configure_item('photo_input', enabled=True, min_value=1, max_value=len(self.images_df))
+                dpg.set_value('photo_input', 1)
+            case 'bad_images':
+                dpg.set_value('image_combo_mode', 'bad_images')
+                dpg.configure_item('photo_input', enabled=True, min_value=1, max_value=len(self.bad_images_df))
+                dpg.set_value('photo_input', 1)
+        self.__show_instance(0)
 
     def delete(self):
         dpg.delete_item('control_window')
